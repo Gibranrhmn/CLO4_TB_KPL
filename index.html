@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizilla!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+        </div>
+    </div>
+
+    <div id="app" class="app-container">
+        <!-- Welcome Screen & Setup -->
+        <section id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <div class="logo-container">
+                    <i class="fas fa-brain logo-icon"></i>
+                    <h1 class="app-title">Quiz Master</h1>
+                    <p class="app-subtitle">Uji pengetahuan Anda dengan cara yang menyenangkan!</p>
+                </div>
+                
+                <form id="setup-form" class="setup-form">
+                    <div class="form-group">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-user"></i>
+                            Nama Anda
+                        </label>
+                        <input type="text" id="username" name="username" class="form-input" placeholder="Masukkan nama Anda..." required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="difficulty" class="form-label">
+                                <i class="fas fa-chart-line"></i>
+                                Tingkat Kesulitan
+                            </label>
+                            <select id="difficulty" name="difficulty" class="form-select" required>
+                                <option value="" disabled selected>Pilih tingkat</option>
+                                <option value="easy">🟢 Mudah</option>
+                                <option value="medium">🟡 Sedang</option>
+                                <option value="hard">🔴 Sulit</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category" class="form-label">
+                                <i class="fas fa-bookmark"></i>
+                                Kategori
+                            </label>
+                            <select id="category" name="category" class="form-select" required>
+                                <option value="" disabled selected>Pilih kategori</option>
+                                <option value="18">💻 Komputer</option>
+                                <option value="19">🔢 Matematika</option>
+                                <option value="23">📚 Sejarah</option>
+                                <option value="17">🧬 Biologi</option>
+                                <option value="24">⚗️ Kimia</option>
+                                <option value="22">🌍 Geografi</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount" class="form-label">
+                            <i class="fas fa-list-ol"></i>
+                            Jumlah Soal
+                        </label>
+                        <div class="slider-container">
+                            <input type="range" id="amount" name="amount" min="5" max="20" value="10" class="form-slider">
+                            <span id="amount-display" class="slider-value">10</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-start">
+                        <i class="fas fa-play"></i>
+                        Mulai Quiz
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <span id="question-counter" class="question-counter">1 / 10</span>
+                </div>
+                
+                <div class="quiz-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer" class="timer">60</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span id="current-score" class="score">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-content">
+                <div class="question-container">
+                    <h2 id="question-text" class="question-text"></h2>
+                </div>
+
+                <div class="options-container">
+                    <ul id="options-list" class="options-list"></ul>
+                </div>
+
+                <div class="quiz-actions">
+                    <button id="skip-btn" class="btn btn-secondary">
+                        <i class="fas fa-forward"></i>
+                        Lewati
+                    </button>
+                    <button id="hint-btn" class="btn btn-outline">
+                        <i class="fas fa-lightbulb"></i>
+                        Hint
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Screen -->
+        <section id="result-screen" class="screen">
+            <div class="result-content">
+                <div class="result-animation">
+                    <div id="result-icon" class="result-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                </div>
+                
+                <h2 id="result-title" class="result-title">Selamat!</h2>
+                <p id="result-message" class="result-message"></p>
+                
+                <div class="score-breakdown">
+                    <div class="score-item">
+                        <span class="score-label">Skor Akhir</span>
+                        <span id="final-score" class="score-value">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Jawaban Benar</span>
+                        <span id="correct-answers" class="score-value">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="score-label">Waktu Rata-rata</span>
+                        <span id="avg-time" class="score-value">0s</span>
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="play-again-btn" class="btn btn-primary">
+                        <i class="fas fa-redo"></i>
+                        Main Lagi
+                    </button>
+                    <button id="share-btn" class="btn btn-outline">
+                        <i class="fas fa-share-alt"></i>
+                        Bagikan Skor
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen" class="loading-screen">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p class="loading-text">Memuat soal...</p>
+        </div>
+    </div>
+
+    <!-- Sound Effects -->
+    <audio id="correct-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQdCTaT2/TJ" type="audio/wav">
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm1 0IBAAAAABAAIAAB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQdCTaT2/TJ" type="audio/wav">
+    </audio>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
